@@ -17,3 +17,7 @@ class TestAccessNestedMap(TestCase):
                                path: Sequence, res: Any):
         """This function will test the given parameterized iterable"""
         self.assertEqual(access_nested_map(nested, path), res)
+
+
+if __name__ == "__main__":
+    unittest.main()
