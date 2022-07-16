@@ -13,7 +13,6 @@ class TestAccessNestedMap(TestCase):
         ("second", {"a": {"b": 2}}, ("a",), {"b": 2}),
         ("third", {"a": {"b": 2}}, ("a", "b"), 2)
         ])
-    def test_access_nested_map(self, number: str, nested: Mapping,
-                               path: Sequence, res: Any):
+    def test_access_nested_map(self, number: str, nested: Mapping, path: Sequence, res: Any):
         """This function will test the given parameterized iterable"""
         self.assertEqual(access_nested_map(nested, path), res)
