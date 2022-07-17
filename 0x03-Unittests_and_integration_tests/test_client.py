@@ -18,6 +18,13 @@ class TestGithubOrgClient(TestCase):
         orgs = GithubOrgClient(org)
         orgs.org
 
+    def test_public_repos_url(self):
+        """This function will test _public_repos_url"""
+        with mock.patch('client.GithubOrgClient.org') as org:
+            org.return_value = {"repos_url": "https://api.github\
+                                .com/orgs/google/repos"}
+            GithubOrgClient._public_repos_url
+
 
 if __name__ == "__main__":
     unittest.main()
