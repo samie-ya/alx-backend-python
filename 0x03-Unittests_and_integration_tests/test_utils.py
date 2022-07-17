@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """This script will create unittests"""
 from parameterized import parameterized
-from typing import Mapping, Sequence, Any
-from unittest import TestCase
-from utils import access_nested_map
+from typing import Mapping, Sequence, Any, Dict
+from unittest import TestCase, mock
+from utils import access_nested_map, get_json
 
 
 class TestAccessNestedMap(TestCase):
@@ -26,6 +26,19 @@ class TestAccessNestedMap(TestCase):
                                          path: Sequence):
         """This function will test raising errors"""
         self.assertRaises(KeyError, access_nested_map, nested, path)
+
+
+class TestGetJson(TestCase):
+    """This class will test get_json"""
+    @parameterized.expand([
+        ("url1", "http://example.com", {"payload": True}),
+        ("url2", "http://holberton.io", {"payload": False})
+        ])
+    def test_get_json(self, name: str, url: str, res: Dict):
+        """This function will create a mock for a request"""
+        with mock.patch('utils.requests') as request:
+            request.json.return_value = res
+            get_json(url)
 
 
 if __name__ == "__main__":
