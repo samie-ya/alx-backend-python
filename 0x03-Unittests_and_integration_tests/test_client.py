@@ -25,6 +25,14 @@ class TestGithubOrgClient(TestCase):
                                 .com/orgs/google/repos"}
             GithubOrgClient._public_repos_url
 
+    @mock.patch('utils.get_json')
+    def test_public_repos(self, mock_json):
+        """This function will test public_repos"""
+        mock_json.json.return_value = {"name": "truth"}
+        with mock.patch('client.GithubOrgClient._public_repos_url') as repos:
+            repos.return_value = ["truth"]
+            GithubOrgClient.public_repos
+
 
 if __name__ == "__main__":
     unittest.main()
