@@ -2,8 +2,8 @@
 """This script will create unittests"""
 from client import GithubOrgClient
 from parameterized import parameterized
+from typing import Dict
 from unittest import TestCase, mock
-from utils import get_json
 
 
 class TestGithubOrgClient(TestCase):
@@ -25,13 +25,14 @@ class TestGithubOrgClient(TestCase):
                                 .com/orgs/google/repos"}
             GithubOrgClient._public_repos_url
 
-    @mock.patch('utils.get_json')
-    def test_public_repos(self, mock_json):
-        """This function will test public_repos"""
-        mock_json.json.return_value = {"name": "truth"}
-        with mock.patch('client.GithubOrgClient._public_repos_url') as repos:
-            repos.return_value = ["truth"]
-            GithubOrgClient.public_repos
+    @parameterized.expand([
+        ("1", {"license": {"key": "my_license"}}, "my_license", True),
+        ("2", {"license": {"key": "other_license"}}, "my_license", False)
+        ])
+    def test_has_license(self, name: str, repo: Dict[str, Dict],
+                         res: str, Bool: bool):
+        """This function will test has_license"""
+        self.assertEqual(GithubOrgClient.has_license(repo, res), Bool)
 
 
 if __name__ == "__main__":
