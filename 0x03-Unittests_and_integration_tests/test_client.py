@@ -26,13 +26,12 @@ class TestGithubOrgClient(TestCase):
             GithubOrgClient._public_repos_url
 
     @parameterized.expand([
-        ("1", {"license": {"key": "my_license"}}, "my_license", True),
-        ("2", {"license": {"key": "other_license"}}, "my_license", False)
+        ("license1", {"license": {"key": "my_license"}}, "my_license", True),
+        ("license2", {"license": {"key": "other_license"}}, "my_license", False)
         ])
-    def test_has_license(self, name: str, repo: Dict[str, Dict],
-                         res: str, Bool: bool):
+    def test_has_license(self, name, repo, license, res):
         """This function will test has_license"""
-        self.assertEqual(GithubOrgClient.has_license(repo, res), Bool)
+        self.assertEqual(GithubOrgClient.has_license(repo, license), res)
 
 
 if __name__ == "__main__":
